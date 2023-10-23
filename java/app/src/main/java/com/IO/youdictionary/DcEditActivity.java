@@ -141,6 +141,24 @@ public class DcEditActivity extends AppCompatActivity {
 				final int _position = _param3;
 				dial.setTitle(words.get((int)_position).get("orig").toString());
 				dial.setMessage(words.get((int)_position).get("props").toString());
+				dial.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						
+					}
+				});
+				dial.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						
+					}
+				});
+				dial.setNeutralButton("Neutral", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						
+					}
+				});
 				dial.create().show();
 			}
 		});
@@ -248,6 +266,7 @@ public class DcEditActivity extends AppCompatActivity {
 				if (!(edit.getText().toString().equals("") && edit2.getText().toString().equals(""))) {
 					words.get((int)cur_pos).put("orig", edit.getText().toString());
 					words.get((int)cur_pos).put("trans", edit2.getText().toString());
+					SketchwareUtil.sortListMap(words, "orig", false, true);
 					_save(new Gson().toJson(words), FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
 					_update();
 				}
@@ -393,6 +412,14 @@ public class DcEditActivity extends AppCompatActivity {
 			
 			original.setText(_data.get((int)_position).get("orig").toString());
 			transition.setText(_data.get((int)_position).get("trans").toString());
+			if (_position == 0) {
+				linear1.setBackgroundColor(0xFF4DB6AC);
+			}
+			else {
+				if (!_data.get((int)_position).get("orig").toString().substring((int)(0), (int)(1)).equals(_data.get((int)_position - 1).get("orig").toString().substring((int)(0), (int)(1)))) {
+					linear1.setBackgroundColor(0xFF4DB6AC);
+				}
+			}
 			
 			return _view;
 		}

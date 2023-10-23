@@ -35,6 +35,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import androidx.viewpager.widget.ViewPager.OnAdapterChangeListener;
 import android.widget.Button;
+import com.google.android.material.textfield.*;
 import android.widget.EditText;
 import android.content.Intent;
 import android.net.Uri;
@@ -67,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
 	private TextView main_text;
 	private ViewPager pager1;
 	private Button add_but;
-	private EditText add_edit;
+	private TextInputLayout textinputlayout1;
 	private Button create_but;
+	private EditText add_edit;
 	
 	private Intent trans = new Intent();
 	private AlertDialog.Builder dial;
@@ -114,8 +116,9 @@ public class MainActivity extends AppCompatActivity {
 		main_text = (TextView) findViewById(R.id.main_text);
 		pager1 = (ViewPager) findViewById(R.id.pager1);
 		add_but = (Button) findViewById(R.id.add_but);
-		add_edit = (EditText) findViewById(R.id.add_edit);
+		textinputlayout1 = (TextInputLayout) findViewById(R.id.textinputlayout1);
 		create_but = (Button) findViewById(R.id.create_but);
+		add_edit = (EditText) findViewById(R.id.add_edit);
 		dial = new AlertDialog.Builder(this);
 		
 		add_but.setOnClickListener(new View.OnClickListener() {

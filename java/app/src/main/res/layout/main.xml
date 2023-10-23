@@ -27,6 +27,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:padding="8dp"
+			android:background="#B2DFDB"
 			android:gravity="center_horizontal"
 			android:orientation="vertical">
 			<TextView
@@ -36,7 +37,8 @@
 				android:padding="8dp"
 				android:text="Dictionaries"
 				android:textSize="20sp"
-				android:textColor="#000000"
+				android:textStyle="bold"
+				android:textColor="#004D40"
 				android:singleLine="true" />
 			<androidx.viewpager.widget.ViewPager
 				android:id="@+id/pager1"
@@ -51,28 +53,37 @@
 				android:layout_height="wrap_content"
 				android:layout_margin="5dp"
 				android:padding="8dp"
-				android:background="#26A69A"
+				android:background="#00897B"
 				android:text="Create new"
 				android:textSize="14sp"
-				android:textColor="#000000" />
+				android:textColor="#E0F2F1" />
 		</LinearLayout>
 		<LinearLayout
 			android:id="@+id/add_lin"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:padding="8dp"
+			android:background="#80CBC4"
 			android:gravity="center_horizontal"
 			android:orientation="vertical">
-			<EditText
-				android:id="@+id/add_edit"
-				android:layout_width="wrap_content"
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/textinputlayout1"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:padding="8dp"
-				android:textSize="16sp"
-				android:textColor="#000000"
-				android:hint="Dictionary name"
-				android:textColorHint="#607D8B"
-				android:imeOptions="actionNone" />
+				android:layout_margin="5dp"
+				android:gravity="center_horizontal"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+				<EditText
+					android:id="@+id/add_edit"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:textSize="16sp"
+					android:textColor="#000000"
+					android:hint="Dictionary name"
+					android:textColorHint="#26A69A"
+					android:imeOptions="actionNone" />
+			</com.google.android.material.textfield.TextInputLayout>
 			<Button
 				android:id="@+id/create_but"
 				android:layout_width="wrap_content"
@@ -81,6 +92,7 @@
 				android:background="#00897B"
 				android:text="Create new dictionary"
 				android:textSize="18sp"
+				android:textStyle="italic"
 				android:textColor="#B2DFDB" />
 		</LinearLayout>
 	</LinearLayout>

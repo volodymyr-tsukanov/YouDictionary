@@ -27,6 +27,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:padding="8dp"
+			android:background="#B2DFDB"
 			android:gravity="center_horizontal"
 			android:orientation="vertical">
 			<ListView
@@ -34,22 +35,27 @@
 				android:layout_width="match_parent"
 				android:layout_height="600dp"
 				android:padding="8dp"
+				android:background="#80CBC4"
 				android:dividerHeight="3dp"
 				android:choiceMode="none" />
 			<Button
 				android:id="@+id/add_word"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_margin="3dp"
 				android:padding="8dp"
+				android:background="#00796B"
 				android:text="Add new word"
 				android:textSize="14sp"
-				android:textColor="#000000" />
+				android:textStyle="bold"
+				android:textColor="#E0F2F1" />
 		</LinearLayout>
 		<LinearLayout
 			android:id="@+id/add_lin"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:padding="8dp"
+			android:background="#26A69A"
 			android:gravity="center_horizontal"
 			android:orientation="vertical">
 			<LinearLayout
@@ -57,6 +63,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:padding="8dp"
+				android:background="#009688"
 				android:gravity="center_horizontal"
 				android:orientation="horizontal">
 				<EditText
@@ -66,9 +73,9 @@
 					android:layout_margin="3dp"
 					android:padding="8dp"
 					android:textSize="14sp"
-					android:textColor="#000000"
+					android:textColor="#E0F2F1"
 					android:hint="Original"
-					android:textColorHint="#607D8B" />
+					android:textColorHint="#80CBC4" />
 				<EditText
 					android:id="@+id/trans"
 					android:layout_width="wrap_content"
@@ -79,9 +86,9 @@
 					android:layout_marginBottom="3dp"
 					android:padding="8dp"
 					android:textSize="14sp"
-					android:textColor="#000000"
+					android:textColor="#E0F2F1"
 					android:hint="Transition"
-					android:textColorHint="#607D8B" />
+					android:textColorHint="#80CBC4" />
 			</LinearLayout>
 			<Button
 				android:id="@+id/create_but"
@@ -89,20 +96,24 @@
 				android:layout_height="wrap_content"
 				android:layout_margin="5dp"
 				android:padding="8dp"
+				android:background="#00796B"
 				android:text="Add"
 				android:textSize="14sp"
-				android:textColor="#000000" />
+				android:textStyle="italic"
+				android:textColor="#E0F2F1" />
 		</LinearLayout>
 		<HorizontalScrollView
 			android:id="@+id/edit_scroll"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:padding="8dp">
+			android:padding="8dp"
+			android:background="#80CBC4">
 			<LinearLayout
 				android:id="@+id/edit_lin2"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:padding="8dp"
+				android:background="#4DB6AC"
 				android:orientation="horizontal">
 				<EditText
 					android:id="@+id/edit"
@@ -110,26 +121,27 @@
 					android:layout_height="wrap_content"
 					android:padding="8dp"
 					android:textSize="12sp"
-					android:textColor="#000000"
+					android:textColor="#E0F2F1"
 					android:hint="Original"
-					android:textColorHint="#607D8B" />
+					android:textColorHint="#B2DFDB" />
 				<EditText
 					android:id="@+id/edit2"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:padding="8dp"
 					android:textSize="12sp"
-					android:textColor="#000000"
+					android:textColor="#E0F2F1"
 					android:hint="Transition"
-					android:textColorHint="#607D8B" />
+					android:textColorHint="#B2DFDB" />
 				<Button
 					android:id="@+id/aply_edit_but"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:padding="8dp"
+					android:background="#009688"
 					android:text="Apply"
 					android:textSize="14sp"
-					android:textColor="#000000" />
+					android:textColor="#B2DFDB" />
 			</LinearLayout>
 		</HorizontalScrollView>
 		<LinearLayout
@@ -137,6 +149,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:padding="8dp"
+			android:background="#80CBC4"
 			android:gravity="center_horizontal"
 			android:orientation="vertical">
 			<EditText
@@ -145,17 +158,18 @@
 				android:layout_height="wrap_content"
 				android:padding="8dp"
 				android:textSize="12sp"
-				android:textColor="#000000"
+				android:textColor="#004D40"
 				android:hint="Properties"
-				android:textColorHint="#607D8B" />
+				android:textColorHint="#B2DFDB" />
 			<Button
 				android:id="@+id/props_but"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:padding="8dp"
+				android:background="#009688"
 				android:text="Add"
 				android:textSize="14sp"
-				android:textColor="#000000" />
+				android:textColor="#B2DFDB" />
 		</LinearLayout>
 	</LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
