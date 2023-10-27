@@ -1,0 +1,45 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:id="@+id/main_lin"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="8dp"
+		android:background="#00897B"
+		android:orientation="vertical">
+		<LinearLayout
+			android:id="@+id/lin1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:background="#26A69A"
+			android:gravity="center_horizontal"
+			android:orientation="horizontal">
+			<Button
+				android:id="@+id/imp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="8dp"
+				android:padding="8dp"
+				android:background="#B2DFDB"
+				android:text="Import"
+				android:textSize="16sp"
+				android:textColor="#004D40" />
+			<Button
+				android:id="@+id/exp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="8dp"
+				android:padding="8dp"
+				android:background="#B2DFDB"
+				android:text="Export"
+				android:textSize="16sp"
+				android:textColor="#004D40" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

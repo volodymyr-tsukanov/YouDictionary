@@ -35,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import com.google.android.material.textfield.*;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import java.util.Calendar;
@@ -76,8 +77,9 @@ public class DcEditActivity extends AppCompatActivity {
 	private EditText edit;
 	private EditText edit2;
 	private Button aply_edit_but;
-	private EditText props_edit;
+	private TextInputLayout textinputlayout1;
 	private Button props_but;
+	private EditText props_edit;
 	
 	private AlertDialog.Builder dial;
 	private Calendar day = Calendar.getInstance();
@@ -131,8 +133,9 @@ public class DcEditActivity extends AppCompatActivity {
 		edit = (EditText) findViewById(R.id.edit);
 		edit2 = (EditText) findViewById(R.id.edit2);
 		aply_edit_but = (Button) findViewById(R.id.aply_edit_but);
-		props_edit = (EditText) findViewById(R.id.props_edit);
+		textinputlayout1 = (TextInputLayout) findViewById(R.id.textinputlayout1);
 		props_but = (Button) findViewById(R.id.props_but);
+		props_edit = (EditText) findViewById(R.id.props_edit);
 		dial = new AlertDialog.Builder(this);
 		
 		wordlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {

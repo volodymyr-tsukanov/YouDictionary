@@ -1,99 +1,113 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.drawerlayout.widget.DrawerLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/_coordinator"
+	android:id="@+id/_drawer"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
-	<com.google.android.material.appbar.AppBarLayout
-		android:id="@+id/_app_bar"
+	android:layout_height="match_parent"
+	tools:openDrawer="start">
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+		android:id="@+id/_coordinator"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:theme="@style/AppTheme.AppBarOverlay">
-		<androidx.appcompat.widget.Toolbar
-			android:id="@+id/_toolbar"
-			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			android:background="?attr/colorPrimary"
-			app:popupTheme="@style/AppTheme.PopupOverlay" />
-	</com.google.android.material.appbar.AppBarLayout>
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
-		<LinearLayout
-			android:id="@+id/lin1"
+		android:layout_height="match_parent">
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/_app_bar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:padding="8dp"
-			android:background="#B2DFDB"
-			android:gravity="center_horizontal"
-			android:orientation="vertical">
-			<TextView
-				android:id="@+id/main_text"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="8dp"
-				android:text="Dictionaries"
-				android:textSize="20sp"
-				android:textStyle="bold"
-				android:textColor="#004D40"
-				android:singleLine="true" />
-			<androidx.viewpager.widget.ViewPager
-				android:id="@+id/pager1"
+			android:theme="@style/AppTheme.AppBarOverlay">
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/_toolbar"
 				android:layout_width="match_parent"
-				android:layout_height="200dp"
-				android:layout_margin="5dp"
-				android:padding="8dp"
-				android:background="#80CBC4" />
-			<Button
-				android:id="@+id/add_but"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_margin="5dp"
-				android:padding="8dp"
-				android:background="#00897B"
-				android:text="Create new"
-				android:textSize="14sp"
-				android:textColor="#E0F2F1" />
-		</LinearLayout>
+				android:layout_height="?attr/actionBarSize"
+				android:background="?attr/colorPrimary"
+				app:popupTheme="@style/AppTheme.PopupOverlay" />
+		</com.google.android.material.appbar.AppBarLayout>
 		<LinearLayout
-			android:id="@+id/add_lin"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:padding="8dp"
-			android:background="#80CBC4"
-			android:gravity="center_horizontal"
-			android:orientation="vertical">
-			<com.google.android.material.textfield.TextInputLayout
-				android:id="@+id/textinputlayout1"
+			android:orientation="vertical"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior">
+			<LinearLayout
+				android:id="@+id/lin1"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_margin="5dp"
+				android:padding="8dp"
+				android:background="#B2DFDB"
 				android:gravity="center_horizontal"
-				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-				<EditText
-					android:id="@+id/add_edit"
+				android:orientation="vertical">
+				<TextView
+					android:id="@+id/main_text"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:padding="8dp"
-					android:textSize="16sp"
-					android:textColor="#000000"
-					android:hint="Dictionary name"
-					android:textColorHint="#26A69A"
-					android:imeOptions="actionNone" />
-			</com.google.android.material.textfield.TextInputLayout>
-			<Button
-				android:id="@+id/create_but"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+					android:text="Dictionaries"
+					android:textSize="20sp"
+					android:textStyle="bold"
+					android:textColor="#004D40"
+					android:singleLine="true" />
+				<androidx.viewpager.widget.ViewPager
+					android:id="@+id/pager1"
+					android:layout_width="match_parent"
+					android:layout_height="200dp"
+					android:layout_margin="5dp"
+					android:padding="8dp"
+					android:background="#80CBC4" />
+				<Button
+					android:id="@+id/add_but"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:padding="8dp"
+					android:background="#00897B"
+					android:text="Create new"
+					android:textSize="14sp"
+					android:textColor="#E0F2F1" />
+			</LinearLayout>
+			<LinearLayout
+				android:id="@+id/add_lin"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:padding="8dp"
-				android:background="#00897B"
-				android:text="Create new dictionary"
-				android:textSize="18sp"
-				android:textStyle="italic"
-				android:textColor="#B2DFDB" />
+				android:background="#80CBC4"
+				android:gravity="center_horizontal"
+				android:orientation="vertical">
+				<com.google.android.material.textfield.TextInputLayout
+					android:id="@+id/textinputlayout1"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:gravity="center_horizontal"
+					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+					<EditText
+						android:id="@+id/add_edit"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:textSize="16sp"
+						android:textColor="#000000"
+						android:hint="Dictionary name"
+						android:textColorHint="#26A69A"
+						android:imeOptions="actionNone" />
+				</com.google.android.material.textfield.TextInputLayout>
+				<Button
+					android:id="@+id/create_but"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:background="#00897B"
+					android:text="Create new dictionary"
+					android:textSize="18sp"
+					android:textStyle="italic"
+					android:textColor="#B2DFDB" />
+			</LinearLayout>
 		</LinearLayout>
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+	<LinearLayout
+		android:id="@+id/_nav_view"
+		android:layout_width="320dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="start"
+		android:background="#EEEEEE">
+		<include layout="@layout/_drawer_main" />
 	</LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

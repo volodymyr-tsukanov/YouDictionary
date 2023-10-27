@@ -5,6 +5,10 @@ import androidx.annotation.*;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.appbar.AppBarLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import android.widget.LinearLayout;
 import android.app.*;
 import android.os.*;
 import android.view.*;
@@ -28,7 +32,6 @@ import java.text.*;
 import org.json.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.PagerAdapter;
@@ -43,6 +46,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import android.content.ClipData;
 import android.view.View;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -56,10 +60,12 @@ import android.content.pm.PackageManager;
 
 
 public class MainActivity extends AppCompatActivity {
+	public final int REQ_CD_FP = 101;
 	
 	private Toolbar _toolbar;
 	private AppBarLayout _app_bar;
 	private CoordinatorLayout _coordinator;
+	private DrawerLayout _drawer;
 	
 	private ArrayList<HashMap<String, Object>> dc = new ArrayList<>();
 	
@@ -71,10 +77,15 @@ public class MainActivity extends AppCompatActivity {
 	private TextInputLayout textinputlayout1;
 	private Button create_but;
 	private EditText add_edit;
+	private LinearLayout _drawer_main_lin;
+	private LinearLayout _drawer_lin1;
+	private Button _drawer_imp;
+	private Button _drawer_exp;
 	
 	private Intent trans = new Intent();
 	private AlertDialog.Builder dial;
 	private Calendar day = Calendar.getInstance();
+	private Intent fp = new Intent(Intent.ACTION_GET_CONTENT);
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -111,6 +122,13 @@ public class MainActivity extends AppCompatActivity {
 				onBackPressed();
 			}
 		});
+		_drawer = (DrawerLayout) findViewById(R.id._drawer);
+		ActionBarDrawerToggle _toggle = new ActionBarDrawerToggle(MainActivity.this, _drawer, _toolbar, R.string.app_name, R.string.app_name);
+		_drawer.addDrawerListener(_toggle);
+		_toggle.syncState();
+		
+		LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);
+		
 		lin1 = (LinearLayout) findViewById(R.id.lin1);
 		add_lin = (LinearLayout) findViewById(R.id.add_lin);
 		main_text = (TextView) findViewById(R.id.main_text);
@@ -119,7 +137,13 @@ public class MainActivity extends AppCompatActivity {
 		textinputlayout1 = (TextInputLayout) findViewById(R.id.textinputlayout1);
 		create_but = (Button) findViewById(R.id.create_but);
 		add_edit = (EditText) findViewById(R.id.add_edit);
+		_drawer_main_lin = (LinearLayout) _nav_view.findViewById(R.id.main_lin);
+		_drawer_lin1 = (LinearLayout) _nav_view.findViewById(R.id.lin1);
+		_drawer_imp = (Button) _nav_view.findViewById(R.id.imp);
+		_drawer_exp = (Button) _nav_view.findViewById(R.id.exp);
 		dial = new AlertDialog.Builder(this);
+		fp.setType("*/*");
+		fp.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 		
 		add_but.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -156,6 +180,28 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+		
+		_drawer_imp.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				SketchwareUtil.showMessage(getApplicationContext(), "Coose dictionary to pick");
+				SketchwareUtil.showMessage(getApplicationContext(), "Coose dictionary to pick");
+				startActivityForResult(fp, REQ_CD_FP);
+			}
+		});
+		
+		_drawer_exp.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (FileUtil.isExistFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"))) {
+					day = Calendar.getInstance();
+					FileUtil.makeDir(FileUtil.getExternalStorageDir().concat("/IO/YouDictionary/"));
+					FileUtil.copyFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"), FileUtil.getExternalStorageDir().concat("/IO/YouDictionary/ydc ".concat(new SimpleDateFormat("dd_MM_yyyy HH_mm").format(day.getTime()).concat(".data"))));
+					SketchwareUtil.showMessage(getApplicationContext(), "Exported to Phone Storage/IO/YouDictionary/");
+					SketchwareUtil.showMessage(getApplicationContext(), "Exported to Phone Storage/IO/YouDictionary/");
+				}
+			}
+		});
 	}
 	
 	private void initializeLogic() {
@@ -165,7 +211,27 @@ public class MainActivity extends AppCompatActivity {
 	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
 		super.onActivityResult(_requestCode, _resultCode, _data);
 		switch (_requestCode) {
-			
+			case REQ_CD_FP:
+			if (_resultCode == Activity.RESULT_OK) {
+				ArrayList<String> _filePath = new ArrayList<>();
+				if (_data != null) {
+					if (_data.getClipData() != null) {
+						for (int _index = 0; _index < _data.getClipData().getItemCount(); _index++) {
+							ClipData.Item _item = _data.getClipData().getItemAt(_index);
+							_filePath.add(FileUtil.convertUriToFilePath(getApplicationContext(), _item.getUri()));
+						}
+					}
+					else {
+						_filePath.add(FileUtil.convertUriToFilePath(getApplicationContext(), _data.getData()));
+					}
+				}
+				_get_data(_filePath.get((int)(0)));
+				_save(new Gson().toJson(dc), FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
+			}
+			else {
+				
+			}
+			break;
 			default:
 			break;
 		}
@@ -198,6 +264,16 @@ public class MainActivity extends AppCompatActivity {
 				}
 			});
 			dial.create().show();
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if (_drawer.isDrawerOpen(GravityCompat.START)) {
+			_drawer.closeDrawer(GravityCompat.START);
+		}
+		else {
+			super.onBackPressed();
 		}
 	}
 	public void _update () {
