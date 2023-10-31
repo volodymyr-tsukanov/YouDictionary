@@ -32,6 +32,7 @@ import java.text.*;
 import org.json.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.PagerAdapter;
@@ -66,17 +67,22 @@ public class MainActivity extends AppCompatActivity {
 	private AppBarLayout _app_bar;
 	private CoordinatorLayout _coordinator;
 	private DrawerLayout _drawer;
+	private double cur_pos = 0;
 	
 	private ArrayList<HashMap<String, Object>> dc = new ArrayList<>();
 	
 	private LinearLayout lin1;
 	private LinearLayout add_lin;
+	private HorizontalScrollView edit_scroll;
 	private TextView main_text;
 	private ViewPager pager1;
 	private Button add_but;
 	private TextInputLayout textinputlayout1;
 	private Button create_but;
 	private EditText add_edit;
+	private LinearLayout edit_lin2;
+	private EditText edit;
+	private Button apply_but;
 	private LinearLayout _drawer_main_lin;
 	private LinearLayout _drawer_lin1;
 	private Button _drawer_imp;
@@ -131,12 +137,16 @@ public class MainActivity extends AppCompatActivity {
 		
 		lin1 = (LinearLayout) findViewById(R.id.lin1);
 		add_lin = (LinearLayout) findViewById(R.id.add_lin);
+		edit_scroll = (HorizontalScrollView) findViewById(R.id.edit_scroll);
 		main_text = (TextView) findViewById(R.id.main_text);
 		pager1 = (ViewPager) findViewById(R.id.pager1);
 		add_but = (Button) findViewById(R.id.add_but);
 		textinputlayout1 = (TextInputLayout) findViewById(R.id.textinputlayout1);
 		create_but = (Button) findViewById(R.id.create_but);
 		add_edit = (EditText) findViewById(R.id.add_edit);
+		edit_lin2 = (LinearLayout) findViewById(R.id.edit_lin2);
+		edit = (EditText) findViewById(R.id.edit);
+		apply_but = (Button) findViewById(R.id.apply_but);
 		_drawer_main_lin = (LinearLayout) _nav_view.findViewById(R.id.main_lin);
 		_drawer_lin1 = (LinearLayout) _nav_view.findViewById(R.id.lin1);
 		_drawer_imp = (Button) _nav_view.findViewById(R.id.imp);
@@ -177,6 +187,20 @@ public class MainActivity extends AppCompatActivity {
 					_update();
 					lin1.setVisibility(View.VISIBLE);
 					add_lin.setVisibility(View.GONE);
+				}
+			}
+		});
+		
+		apply_but.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (edit.getText().toString().equals("")) {
+					SketchwareUtil.showMessage(getApplicationContext(), "Enter name firstly");
+				}
+				else {
+					dc.get((int)cur_pos).put("nm", edit.getText().toString());
+					_save(new Gson().toJson(dc), FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
+					_update();
 				}
 			}
 		});
@@ -279,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
 	public void _update () {
 		lin1.setVisibility(View.VISIBLE);
 		add_lin.setVisibility(View.GONE);
+		edit_scroll.setVisibility(View.GONE);
 		add_edit.setText("");
 		_get_data(FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
 		pager1.setAdapter(new Pager1Adapter(dc));
@@ -308,6 +333,13 @@ public class MainActivity extends AppCompatActivity {
 			FileUtil.makeDir(FileUtil.getPackageDataDir(getApplicationContext()).concat("/temp/"));
 		}
 		FileUtil.writeFile(_path, _value);
+	}
+	
+	
+	public void _edit_nm (final double _pos) {
+		cur_pos = _pos;
+		edit_scroll.setVisibility(View.VISIBLE);
+		edit.setText(dc.get((int)_pos).get("nm").toString());
 	}
 	
 	
@@ -392,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
 					dial.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface _dialog, int _which) {
-							
+							_edit_nm(_position);
 						}
 					});
 					dial.create().show();

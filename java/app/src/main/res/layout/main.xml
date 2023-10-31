@@ -66,7 +66,7 @@
 			<LinearLayout
 				android:id="@+id/add_lin"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
+				android:layout_height="wrap_content"
 				android:padding="8dp"
 				android:background="#80CBC4"
 				android:gravity="center_horizontal"
@@ -100,6 +100,39 @@
 					android:textStyle="italic"
 					android:textColor="#B2DFDB" />
 			</LinearLayout>
+			<HorizontalScrollView
+				android:id="@+id/edit_scroll"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="8dp"
+				android:background="#B2DFDB">
+				<LinearLayout
+					android:id="@+id/edit_lin2"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:background="#80CBC4"
+					android:orientation="horizontal">
+					<EditText
+						android:id="@+id/edit"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:textSize="12sp"
+						android:textColor="#00695C"
+						android:hint="Enter name of dictionary"
+						android:textColorHint="#009688" />
+					<Button
+						android:id="@+id/apply_but"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:background="#00796B"
+						android:text="Apply"
+						android:textSize="14sp"
+						android:textColor="#B2DFDB" />
+				</LinearLayout>
+			</HorizontalScrollView>
 		</LinearLayout>
 	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 	<LinearLayout

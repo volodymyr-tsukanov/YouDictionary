@@ -235,7 +235,7 @@ public class DcEditActivity extends AppCompatActivity {
 							}
 					}
 					if (cont) {
-						SketchwareUtil.showMessage(getApplicationContext(), "");
+						SketchwareUtil.showMessage(getApplicationContext(), "Word is already exists");
 					}
 					else {
 						{
@@ -256,7 +256,7 @@ public class DcEditActivity extends AppCompatActivity {
 					}
 				}
 				else {
-					SketchwareUtil.showMessage(getApplicationContext(), "");
+					SketchwareUtil.showMessage(getApplicationContext(), "Enter word at first");
 				}
 				lin1.setVisibility(View.VISIBLE);
 				add_lin.setVisibility(View.GONE);
@@ -274,7 +274,7 @@ public class DcEditActivity extends AppCompatActivity {
 					_update();
 				}
 				else {
-					
+					SketchwareUtil.showMessage(getApplicationContext(), "Enter word firstly");
 				}
 			}
 		});
@@ -283,7 +283,7 @@ public class DcEditActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View _view) {
 				if (props_edit.getText().toString().equals("")) {
-					SketchwareUtil.showMessage(getApplicationContext(), "");
+					SketchwareUtil.showMessage(getApplicationContext(), "This field must be filed");
 				}
 				else {
 					words.get((int)cur_pos).put("props", props_edit.getText().toString());
