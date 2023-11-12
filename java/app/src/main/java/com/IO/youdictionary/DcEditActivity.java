@@ -59,6 +59,7 @@ public class DcEditActivity extends AppCompatActivity {
 	private AppBarLayout _app_bar;
 	private CoordinatorLayout _coordinator;
 	private double cur_pos = 0;
+	private String filter = "";
 	
 	private ArrayList<HashMap<String, Object>> dc = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> words = new ArrayList<>();
@@ -67,8 +68,11 @@ public class DcEditActivity extends AppCompatActivity {
 	private LinearLayout add_lin;
 	private HorizontalScrollView edit_scroll;
 	private LinearLayout props_lin;
+	private LinearLayout search_lin;
 	private ListView wordlist;
 	private Button add_word;
+	private EditText search_edit;
+	private Button search_but;
 	private LinearLayout add_lin2;
 	private Button create_but;
 	private EditText orig;
@@ -123,8 +127,11 @@ public class DcEditActivity extends AppCompatActivity {
 		add_lin = (LinearLayout) findViewById(R.id.add_lin);
 		edit_scroll = (HorizontalScrollView) findViewById(R.id.edit_scroll);
 		props_lin = (LinearLayout) findViewById(R.id.props_lin);
+		search_lin = (LinearLayout) findViewById(R.id.search_lin);
 		wordlist = (ListView) findViewById(R.id.wordlist);
 		add_word = (Button) findViewById(R.id.add_word);
+		search_edit = (EditText) findViewById(R.id.search_edit);
+		search_but = (Button) findViewById(R.id.search_but);
 		add_lin2 = (LinearLayout) findViewById(R.id.add_lin2);
 		create_but = (Button) findViewById(R.id.create_but);
 		orig = (EditText) findViewById(R.id.orig);
@@ -216,6 +223,19 @@ public class DcEditActivity extends AppCompatActivity {
 			public void onClick(View _view) {
 				lin1.setVisibility(View.GONE);
 				add_lin.setVisibility(View.VISIBLE);
+			}
+		});
+		
+		search_but.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (search_edit.getText().toString().equals("")) {
+					filter = "";
+				}
+				else {
+					filter = search_edit.getText().toString();
+				}
+				((BaseAdapter)wordlist.getAdapter()).notifyDataSetChanged();
 			}
 		});
 		
@@ -413,14 +433,27 @@ public class DcEditActivity extends AppCompatActivity {
 			final TextView original = (TextView) _view.findViewById(R.id.original);
 			final TextView transition = (TextView) _view.findViewById(R.id.transition);
 			
-			original.setText(_data.get((int)_position).get("orig").toString());
-			transition.setText(_data.get((int)_position).get("trans").toString());
-			if (_position == 0) {
-				linear1.setBackgroundColor(0xFF4DB6AC);
+			if (filter.equals("")) {
+				linear1.setVisibility(View.VISIBLE);
+				original.setText(_data.get((int)_position).get("orig").toString());
+				transition.setText(_data.get((int)_position).get("trans").toString());
+				if (_position == 0) {
+					linear1.setBackgroundColor(0xFF4DB6AC);
+				}
+				else {
+					if (!_data.get((int)_position).get("orig").toString().substring((int)(0), (int)(1)).equals(_data.get((int)_position - 1).get("orig").toString().substring((int)(0), (int)(1)))) {
+						linear1.setBackgroundColor(0xFF4DB6AC);
+					}
+				}
 			}
 			else {
-				if (!_data.get((int)_position).get("orig").toString().substring((int)(0), (int)(1)).equals(_data.get((int)_position - 1).get("orig").toString().substring((int)(0), (int)(1)))) {
-					linear1.setBackgroundColor(0xFF4DB6AC);
+				if (_data.get((int)_position).get("orig").toString().contains(filter)) {
+					linear1.setVisibility(View.VISIBLE);
+					original.setText(_data.get((int)_position).get("orig").toString());
+					transition.setText(_data.get((int)_position).get("trans").toString());
+				}
+				else {
+					linear1.setVisibility(View.GONE);
 				}
 			}
 			

@@ -30,10 +30,43 @@
 			android:background="#B2DFDB"
 			android:gravity="center_horizontal"
 			android:orientation="vertical">
+			<LinearLayout
+				android:id="@+id/search_lin"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="8dp"
+				android:background="#80CBC4"
+				android:gravity="right|center_vertical"
+				android:orientation="horizontal">
+				<EditText
+					android:id="@+id/search_edit"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="5dp"
+					android:padding="8dp"
+					android:textSize="14sp"
+					android:textColor="#004D40"
+					android:hint="Enter search filter"
+					android:textColorHint="#00897B"
+					android:imeOptions="actionSearch"
+					android:translationX="-90.0dp" />
+				<Button
+					android:id="@+id/search_but"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:background="@drawable/ic_pageview_black"
+					android:gravity="right"
+					android:textSize="12sp"
+					android:textColor="#000000"
+					android:alpha="0.8"
+					android:scaleX="0.6"
+					android:layout_gravity="right" />
+			</LinearLayout>
 			<ListView
 				android:id="@+id/wordlist"
 				android:layout_width="match_parent"
-				android:layout_height="600dp"
+				android:layout_height="500dp"
 				android:padding="8dp"
 				android:background="#80CBC4"
 				android:dividerHeight="3dp"
