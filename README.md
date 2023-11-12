@@ -1,5 +1,6 @@
 # YouDictionary
-Basic dictionary</br></br>
+Basic dictionary</br>
+Something I can show and don't worry if it gets stolen</br></br>
 
 
 Shield: [![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
