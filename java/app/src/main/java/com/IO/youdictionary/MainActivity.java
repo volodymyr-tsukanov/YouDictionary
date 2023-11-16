@@ -301,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 	public void _update () {
+		SketchwareUtil.hideKeyboard(getApplicationContext());
 		lin1.setVisibility(View.VISIBLE);
 		add_lin.setVisibility(View.GONE);
 		edit_scroll.setVisibility(View.GONE);

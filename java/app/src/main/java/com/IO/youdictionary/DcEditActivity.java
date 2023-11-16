@@ -236,6 +236,7 @@ public class DcEditActivity extends AppCompatActivity {
 					filter = search_edit.getText().toString();
 				}
 				((BaseAdapter)wordlist.getAdapter()).notifyDataSetChanged();
+				SketchwareUtil.hideKeyboard(getApplicationContext());
 			}
 		});
 		
@@ -287,11 +288,25 @@ public class DcEditActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View _view) {
 				if (!(edit.getText().toString().equals("") && edit2.getText().toString().equals(""))) {
-					words.get((int)cur_pos).put("orig", edit.getText().toString());
-					words.get((int)cur_pos).put("trans", edit2.getText().toString());
-					SketchwareUtil.sortListMap(words, "orig", false, true);
-					_save(new Gson().toJson(words), FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
-					_update();
+					Boolean cont = false;
+					for(int i = 0; i < words.size(); i++)
+					{
+							if(words.get(i).get("orig").toString().equals(edit.getText().toString()))
+							{
+									cont = true;
+									break;
+							}
+					}
+					if (cont) {
+						SketchwareUtil.showMessage(getApplicationContext(), "Word is already exists");
+					}
+					else {
+						words.get((int)cur_pos).put("orig", edit.getText().toString());
+						words.get((int)cur_pos).put("trans", edit2.getText().toString());
+						SketchwareUtil.sortListMap(words, "orig", false, true);
+						_save(new Gson().toJson(words), FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
+						_update();
+					}
 				}
 				else {
 					SketchwareUtil.showMessage(getApplicationContext(), "Enter word firstly");
@@ -390,6 +405,7 @@ public class DcEditActivity extends AppCompatActivity {
 	
 	public void _update () {
 		setTitle(getIntent().getStringExtra("nm"));
+		SketchwareUtil.hideKeyboard(getApplicationContext());
 		lin1.setVisibility(View.VISIBLE);
 		add_lin.setVisibility(View.GONE);
 		edit_scroll.setVisibility(View.GONE);
@@ -441,7 +457,10 @@ public class DcEditActivity extends AppCompatActivity {
 					linear1.setBackgroundColor(0xFF4DB6AC);
 				}
 				else {
-					if (!_data.get((int)_position).get("orig").toString().substring((int)(0), (int)(1)).equals(_data.get((int)_position - 1).get("orig").toString().substring((int)(0), (int)(1)))) {
+					if (_data.get((int)_position).get("orig").toString().substring((int)(0), (int)(1)).equals(_data.get((int)_position - 1).get("orig").toString().substring((int)(0), (int)(1)))) {
+						linear1.setBackgroundColor(0xFFB2DFDB);
+					}
+					else {
 						linear1.setBackgroundColor(0xFF4DB6AC);
 					}
 				}
