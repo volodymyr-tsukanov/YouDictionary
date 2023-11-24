@@ -30,7 +30,7 @@
 			<LinearLayout
 				android:id="@+id/lin1"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				android:padding="8dp"
 				android:background="#B2DFDB"
 				android:gravity="center_horizontal"
@@ -66,7 +66,7 @@
 			<LinearLayout
 				android:id="@+id/add_lin"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				android:padding="8dp"
 				android:background="#80CBC4"
 				android:gravity="center_horizontal"
@@ -103,7 +103,7 @@
 			<HorizontalScrollView
 				android:id="@+id/edit_scroll"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				android:padding="8dp"
 				android:background="#B2DFDB">
 				<LinearLayout
