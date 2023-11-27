@@ -154,6 +154,7 @@ public class DcEditActivity extends AppCompatActivity {
 			@Override 
 			public void onRefresh() {
 				filter = "";
+				cur_pos = 0;
 				((BaseAdapter)wordlist.getAdapter()).notifyDataSetChanged();
 				swiperefreshlayout1.setRefreshing(false);
 			}
@@ -393,8 +394,9 @@ public class DcEditActivity extends AppCompatActivity {
 	
 	private void initializeLogic() {
 		try {
-			_update();
+			cur_pos = 0;
 			search_mode = 1;
+			_update();
 		} catch(Exception e) {
 			dial.setTitle("Error occurred");
 			dial.setMessage(e.toString());
@@ -477,6 +479,7 @@ public class DcEditActivity extends AppCompatActivity {
 		trans.setText("");
 		_get_data(FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
 		wordlist.setAdapter(new WordlistAdapter(words));
+		wordlist.setSelection((int)cur_pos);
 	}
 	
 	

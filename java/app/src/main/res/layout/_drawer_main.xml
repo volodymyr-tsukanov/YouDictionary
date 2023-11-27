@@ -16,6 +16,7 @@
 			android:id="@+id/lin1"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
 			android:padding="8dp"
 			android:background="#26A69A"
 			android:gravity="center_horizontal"
@@ -40,6 +41,24 @@
 				android:text="Export"
 				android:textSize="16sp"
 				android:textColor="#004D40" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/lin2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:padding="8dp"
+			android:background="#26A69A"
+			android:gravity="center_horizontal"
+			android:orientation="horizontal">
+			<Button
+				android:id="@+id/clear"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="8dp"
+				android:text="Clear temporary files"
+				android:textSize="14sp"
+				android:textColor="#000000" />
 		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>

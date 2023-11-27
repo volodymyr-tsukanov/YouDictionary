@@ -85,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
 	private Button apply_but;
 	private LinearLayout _drawer_main_lin;
 	private LinearLayout _drawer_lin1;
+	private LinearLayout _drawer_lin2;
 	private Button _drawer_imp;
 	private Button _drawer_exp;
+	private Button _drawer_clear;
 	
 	private Intent trans = new Intent();
 	private AlertDialog.Builder dial;
@@ -149,8 +151,10 @@ public class MainActivity extends AppCompatActivity {
 		apply_but = (Button) findViewById(R.id.apply_but);
 		_drawer_main_lin = (LinearLayout) _nav_view.findViewById(R.id.main_lin);
 		_drawer_lin1 = (LinearLayout) _nav_view.findViewById(R.id.lin1);
+		_drawer_lin2 = (LinearLayout) _nav_view.findViewById(R.id.lin2);
 		_drawer_imp = (Button) _nav_view.findViewById(R.id.imp);
 		_drawer_exp = (Button) _nav_view.findViewById(R.id.exp);
+		_drawer_clear = (Button) _nav_view.findViewById(R.id.clear);
 		dial = new AlertDialog.Builder(this);
 		fp.setType("*/*");
 		fp.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -223,6 +227,16 @@ public class MainActivity extends AppCompatActivity {
 					FileUtil.copyFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"), FileUtil.getExternalStorageDir().concat("/IO/YouDictionary/ydc ".concat(new SimpleDateFormat("dd_MM_yyyy HH_mm").format(day.getTime()).concat(".data"))));
 					SketchwareUtil.showMessage(getApplicationContext(), "Exported to Phone Storage/IO/YouDictionary/");
 					SketchwareUtil.showMessage(getApplicationContext(), "Exported to Phone Storage/IO/YouDictionary/");
+				}
+			}
+		});
+		
+		_drawer_clear.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (FileUtil.isExistFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/temp/"))) {
+					FileUtil.deleteFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/temp/"));
+					SketchwareUtil.showMessage(getApplicationContext(), "Temporary files cleared");
 				}
 			}
 		});
