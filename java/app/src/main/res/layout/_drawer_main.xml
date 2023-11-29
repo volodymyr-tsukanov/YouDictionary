@@ -59,6 +59,15 @@
 				android:text="Clear temporary files"
 				android:textSize="14sp"
 				android:textColor="#000000" />
+			<Button
+				android:id="@+id/show"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="8dp"
+				android:background="#80CBC4"
+				android:text="Show temporary files"
+				android:textSize="12sp"
+				android:textColor="#000000" />
 		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>

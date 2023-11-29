@@ -74,7 +74,6 @@
 					android:layout_height="480dp"
 					android:padding="8dp"
 					android:background="#80CBC4"
-					android:dividerHeight="3dp"
 					android:choiceMode="none" />
 			</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 			<Button

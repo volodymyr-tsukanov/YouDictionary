@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 	private Button _drawer_imp;
 	private Button _drawer_exp;
 	private Button _drawer_clear;
+	private Button _drawer_show;
 	
 	private Intent trans = new Intent();
 	private AlertDialog.Builder dial;
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 		_drawer_imp = (Button) _nav_view.findViewById(R.id.imp);
 		_drawer_exp = (Button) _nav_view.findViewById(R.id.exp);
 		_drawer_clear = (Button) _nav_view.findViewById(R.id.clear);
+		_drawer_show = (Button) _nav_view.findViewById(R.id.show);
 		dial = new AlertDialog.Builder(this);
 		fp.setType("*/*");
 		fp.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -237,6 +239,50 @@ public class MainActivity extends AppCompatActivity {
 				if (FileUtil.isExistFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/temp/"))) {
 					FileUtil.deleteFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/temp/"));
 					SketchwareUtil.showMessage(getApplicationContext(), "Temporary files cleared");
+				}
+			}
+		});
+		
+		_drawer_show.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (FileUtil.isExistFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/temp/"))) {
+					try {
+						/*
+FileUtil.copyDirectory();
+ArrayList<String> fl = new ArrayList<>();
+String debug = "";
+
+FileUtil.listDir(FileUtil.getPackageDataDir(getApplicationContext()) + "/temp/", fl);
+for(int i = 0; i < fl.size(); i++)
+{
+	ArrayList<String> fl2 = new ArrayList<>();
+	
+	FileUtil.listDir(FileUtil.getPackageDataDir(getApplicationContext()) + "/temp/" + fl.get(i) + "/", fl2);
+	FileUtil.makeDir(FileUtil.getExternalStorageDir() + "/IO/YouDictionary/temp/" + Uri.parse(fl.get(i)).getLastPathSegment() + "/");
+	for(int a = 0; a < fl2.size(); a++)
+	{
+		java.io.FileInputStream input = new java.io.FileInputStream(fl2.get(a));
+		java.io.FileOutputStream output = new java.io.FileOutputStream(FileUtil.getExternalStorageDir() + "/IO/YouDictionary/temp/" + Uri.parse(fl.get(i)).getLastPathSegment() + "/" + Uri.parse(fl2.get(a)).getLastPathSegment());
+		
+		byte[] buf = new byte[1024];
+		int bytesRead;
+		while ((bytesRead = input.read(buf)) > 0) {
+			output.write(buf, 0, bytesRead);
+		}
+		
+		input.close();
+		output.close();
+		
+		debug+= fl2.get(a) + " > " + fl.get(i) + "\n";
+	}
+}
+FileUtil.writeFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/debug.txt"), debug);
+SketchwareUtil.showMessage(getApplicationContext(), "Temporary files showed");
+*/
+					} catch(Exception e) {
+						SketchwareUtil.showMessage(getApplicationContext(), "Error => ".concat(e.toString()));
+					}
 				}
 			}
 		});

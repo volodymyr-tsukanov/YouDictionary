@@ -44,6 +44,8 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import android.view.View;
 import android.widget.AdapterView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import androidx.fragment.app.Fragment;
@@ -63,6 +65,7 @@ public class DcEditActivity extends AppCompatActivity {
 	private double cur_pos = 0;
 	private String filter = "";
 	private double search_mode = 0;
+	private boolean auto_search = false;
 	
 	private ArrayList<HashMap<String, Object>> dc = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> words = new ArrayList<>();
@@ -168,6 +171,26 @@ public class DcEditActivity extends AppCompatActivity {
 			}
 		});
 		
+		search_edit.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
+				final String _charSeq = _param1.toString();
+				if (auto_search) {
+					_search();
+				}
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable _param1) {
+				
+			}
+		});
+		
 		search_but.setOnLongClickListener(new View.OnLongClickListener() {
 			 @Override
 				public boolean onLongClick(View _view) {
@@ -196,10 +219,10 @@ public class DcEditActivity extends AppCompatActivity {
 								search_mode = 3;
 							}
 						});
-						dial.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						dial.setNegativeButton("Auto search", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface _dialog, int _which) {
-								
+								auto_search = true;
 							}
 						});
 						dial.setNeutralButton("Search in all", new DialogInterface.OnClickListener() {
@@ -219,13 +242,7 @@ public class DcEditActivity extends AppCompatActivity {
 		search_but.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				if (search_edit.getText().toString().equals("")) {
-					filter = "";
-				}
-				else {
-					filter = search_edit.getText().toString();
-				}
-				((BaseAdapter)wordlist.getAdapter()).notifyDataSetChanged();
+				_search();
 				SketchwareUtil.hideKeyboard(getApplicationContext());
 			}
 		});
@@ -335,6 +352,14 @@ public class DcEditActivity extends AppCompatActivity {
 						prp = prp.split(":")[0] + ":" + n.toString();
 						dc.get(Integer.valueOf(getIntent().getStringExtra("pos"))).put("props", prp);
 						SketchwareUtil.sortListMap(words, "orig", false, true);
+						for(int i = 0; i < words.size(); i++)
+						{
+								if(words.get(i).get("orig").toString().equals(o))
+								{
+										cur_pos = i;
+										break;
+								}
+						}
 						_save(new Gson().toJson(words), FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
 						_update();
 					}
@@ -480,6 +505,17 @@ public class DcEditActivity extends AppCompatActivity {
 		_get_data(FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
 		wordlist.setAdapter(new WordlistAdapter(words));
 		wordlist.setSelection((int)cur_pos);
+	}
+	
+	
+	public void _search () {
+		if (search_edit.getText().toString().equals("")) {
+			filter = "";
+		}
+		else {
+			filter = search_edit.getText().toString();
+		}
+		((BaseAdapter)wordlist.getAdapter()).notifyDataSetChanged();
 	}
 	
 	
