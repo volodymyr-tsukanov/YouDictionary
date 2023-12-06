@@ -26,8 +26,8 @@ import java.util.*;
 import java.util.regex.*;
 import java.text.*;
 import org.json.*;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ArrayList;
 import android.widget.LinearLayout;
 import android.widget.HorizontalScrollView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -64,8 +64,8 @@ public class DcEditActivity extends AppCompatActivity {
 	private CoordinatorLayout _coordinator;
 	private double cur_pos = 0;
 	private String filter = "";
-	private double search_mode = 0;
 	private boolean auto_search = false;
+	private HashMap<String, Object> props = new HashMap<>();
 	
 	private ArrayList<HashMap<String, Object>> dc = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> words = new ArrayList<>();
@@ -158,6 +158,7 @@ public class DcEditActivity extends AppCompatActivity {
 			public void onRefresh() {
 				filter = "";
 				cur_pos = 0;
+				_get_props();
 				((BaseAdapter)wordlist.getAdapter()).notifyDataSetChanged();
 				swiperefreshlayout1.setRefreshing(false);
 			}
@@ -175,7 +176,7 @@ public class DcEditActivity extends AppCompatActivity {
 			@Override
 			public void onTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
 				final String _charSeq = _param1.toString();
-				if (auto_search) {
+				if (props.get("as").toString().equals("1")) {
 					_search();
 				}
 			}
@@ -199,13 +200,15 @@ public class DcEditActivity extends AppCompatActivity {
 				dial.setPositiveButton("Search in original", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface _dialog, int _which) {
-						search_mode = 1;
+						props.put("sm", "1");
+						_write(new Gson().toJson(props), "props.data");
 					}
 				});
 				dial.setNegativeButton("Search in translation", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface _dialog, int _which) {
-						search_mode = 2;
+						props.put("sm", "2");
+						_write(new Gson().toJson(props), "props.data");
 					}
 				});
 				dial.setNeutralButton("More", new DialogInterface.OnClickListener() {
@@ -216,19 +219,29 @@ public class DcEditActivity extends AppCompatActivity {
 						dial.setPositiveButton("Search in properties", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface _dialog, int _which) {
-								search_mode = 3;
+								props.put("sm", "3");
+								_write(new Gson().toJson(props), "props.data");
 							}
 						});
 						dial.setNegativeButton("Auto search", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface _dialog, int _which) {
-								auto_search = true;
+								if (props.get("as").toString().equals("0")) {
+									props.put("as", "1");
+									SketchwareUtil.showMessage(getApplicationContext(), "Enabled");
+								}
+								else {
+									props.put("as", "0");
+									SketchwareUtil.showMessage(getApplicationContext(), "Disabled");
+								}
+								_write(new Gson().toJson(props), "props.data");
 							}
 						});
 						dial.setNeutralButton("Search in all", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface _dialog, int _which) {
-								search_mode = 5;
+								props.put("sm", "5");
+								_write(new Gson().toJson(props), "props.data");
 							}
 						});
 						dial.create().show();
@@ -343,7 +356,7 @@ public class DcEditActivity extends AppCompatActivity {
 								HashMap<String, Object> _item = new HashMap<>();
 								_item.put("orig", o);
 								_item.put("trans", t);
-								_item.put("props", "Empty");
+								_item.put("props", "-");
 								words.add(_item);
 						}
 						
@@ -420,7 +433,6 @@ public class DcEditActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		try {
 			cur_pos = 0;
-			search_mode = 1;
 			_update();
 		} catch(Exception e) {
 			dial.setTitle("Error occurred");
@@ -503,6 +515,7 @@ public class DcEditActivity extends AppCompatActivity {
 		orig.setText("");
 		trans.setText("");
 		_get_data(FileUtil.getPackageDataDir(getApplicationContext()).concat("/ydc.data"));
+		_get_props();
 		wordlist.setAdapter(new WordlistAdapter(words));
 		wordlist.setSelection((int)cur_pos);
 	}
@@ -516,6 +529,23 @@ public class DcEditActivity extends AppCompatActivity {
 			filter = search_edit.getText().toString();
 		}
 		((BaseAdapter)wordlist.getAdapter()).notifyDataSetChanged();
+	}
+	
+	
+	public void _write (final String _data, final String _path) {
+		FileUtil.writeFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/".concat(_path)), _data);
+	}
+	
+	
+	public void _get_props () {
+		if (FileUtil.isExistFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/props.data"))) {
+			props = new Gson().fromJson(FileUtil.readFile(FileUtil.getPackageDataDir(getApplicationContext()).concat("/props.data")), new TypeToken<HashMap<String, Object>>(){}.getType());
+		}
+		else {
+			props = new HashMap<>();
+			props.put("sm", "1");
+			props.put("as", "0");
+		}
 	}
 	
 	
@@ -570,7 +600,7 @@ public class DcEditActivity extends AppCompatActivity {
 			else {
 				original.setText(_data.get((int)_position).get("orig").toString());
 				transition.setText(_data.get((int)_position).get("trans").toString());
-				if (search_mode == 1) {
+				if (props.get("sm").toString().equals("1")) {
 					if (_data.get((int)_position).get("orig").toString().contains(filter)) {
 						linear1.setVisibility(View.VISIBLE);
 					}
@@ -578,7 +608,7 @@ public class DcEditActivity extends AppCompatActivity {
 						linear1.setVisibility(View.GONE);
 					}
 				}
-				if (search_mode == 2) {
+				if (props.get("sm").toString().equals("2")) {
 					if (_data.get((int)_position).get("trans").toString().contains(filter)) {
 						linear1.setVisibility(View.VISIBLE);
 					}
@@ -586,7 +616,7 @@ public class DcEditActivity extends AppCompatActivity {
 						linear1.setVisibility(View.GONE);
 					}
 				}
-				if (search_mode == 3) {
+				if (props.get("sm").toString().equals("3")) {
 					if (_data.get((int)_position).get("props").toString().contains(filter)) {
 						linear1.setVisibility(View.VISIBLE);
 					}
@@ -594,7 +624,7 @@ public class DcEditActivity extends AppCompatActivity {
 						linear1.setVisibility(View.GONE);
 					}
 				}
-				if (search_mode == 5) {
+				if (props.get("sm").toString().equals("5")) {
 					if (_data.get((int)_position).get("orig").toString().contains(filter) || (_data.get((int)_position).get("trans").toString().contains(filter) || _data.get((int)_position).get("props").toString().contains(filter))) {
 						linear1.setVisibility(View.VISIBLE);
 					}
